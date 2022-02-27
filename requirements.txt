@@ -19,46 +19,7 @@ urllib3==1.26.4
 absl-py==0.13.0
 alabaster==0.7.12
 altgraph==0.17.2
-anaconda-client==1.7.2
-anaconda-navigator==2.0.4
-anaconda-project==0.8.3
-applaunchservices==0.2.1
 
-argh==0.26.2
-asgiref==3.3.1
-astropy==4.0.2
-astunparse==1.6.3
-async-generator==1.10
-atomicwrites==1.4.0
-
-
-numexpr==2.7.1
-numpy==1.18.2
-oauthlib==3.1.1
-olefile==0.46
-opencv-python==4.2.0.34
-opencv-python-headless==4.5.3.56
-opt-einsum==3.3.0
-outcome==1.1.0
-packaging==20.4
-
-parso==0.7.0
-partd==1.1.0
-pathtools==0.1.2
-patsy==0.5.1
-pep8==1.7.1
-
-Pillow==8.1.2
-pkginfo==1.6.1
-pluggy==0.13.1
-ply==3.11
-prometheus-client==0.8.0
-prompt-toolkit==1.0.14
-protobuf==3.17.3
-ptyprocess==0.6.0
-py2app==0.26.1
-pyasn1==0.4.8
-pyasn1-modules==0.2.8
 
 pyflakes==2.2.0
 
