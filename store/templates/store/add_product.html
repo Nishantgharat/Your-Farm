@@ -1,0 +1,82 @@
+{% extends "store/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="card mt-3 mb-5 p-4 shadow col-md-8 mx-auto">
+    <div class="card-title border-bottom  mb-3"><h2>Add Product</h2></div>
+    <form action="add_product" method="POST" enctype="multipart/form-data"> 
+        <div class="row">
+            {% csrf_token %}
+            <div class="col-sm-12 form-group">
+                {{ form.name.errors }}
+                <label class="text-small text-uppercase" for="{{ form.name.id_for_label }}">Name*</label>
+            
+                    {{ form.name }}
+            
+            </div>
+            
+            <div class="form-group col-md-4">
+                {{ form.sell_price.errors }}
+                <label class="text-small text-uppercase" for="{{ form.sell_price.id_for_label }}">Selling Price*</label>
+        
+                    {{ form.sell_price }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.buy_price.errors }}
+                <label class="text-small text-uppercase" for="{{ form.buy_price.id_for_label }}">Buying Price*</label>
+        
+                    {{ form.buy_price }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.sale_price.errors }}
+                <label class="text-small text-uppercase" for="{{ form.sale_price.id_for_label }}">Sale Price*</label>
+        
+                    {{ form.sale_price }}
+            </div>
+        
+            
+            <div class="form-group col-md-6">
+                {{ form.category.errors }}
+                <label class="text-small text-uppercase" for="{{ form.category.id_for_label }}" >Category</label>
+        
+                    {{ form.category }}
+        
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.in_stock.errors }}
+                <label class="text-small text-uppercase" for="{{ form.category.id_for_label }}" >In stock</label>
+        
+                    {{ form.in_stock }}
+        
+            
+            </div>
+            
+            <div class="form-group col-sm-4 ">
+                {{ form.upload_choice.errors }}
+                <label class="text-small text-uppercase" for="{{ form.upload_choice.id_for_label }}">Upload Image</label>
+                {{ form.upload_choice }}
+            </div>
+            <div class="col-sm-4 mt-md-4">
+                {{form.img_url}}
+            </div>
+            <div class="form-group col-sm-4 ml-0 mt-md-4">
+                {{form.img}}
+            </div>
+            
+            
+            <div class="form-group col-12">
+                {{ form.description.errors }}
+                <label class="text-small text-uppercase" for="{{ form.description.id_for_label }}">Description*</label>
+            
+                    {{ form.description }}
+            
+            </div>
+            
+            
+            <div class="form-group ml-3">
+                <input class=" btn btn-dark my-2 px-5" type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

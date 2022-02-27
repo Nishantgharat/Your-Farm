@@ -1,0 +1,128 @@
+{% extends "store/layout.html" %}
+{% load static %}
+{% block body %}
+      
+     
+<div class="container">
+    <!-- HERO SECTION-->
+    <section class="py-3 bg-light">
+      <div class="container">
+        <div class="row px-4 px-lg-5 py-lg-4 align-items-center">
+          <div class="col-lg-6">
+            <h1 class="h2 text-uppercase mb-0">{% if request.user.is_farmer %}Supply{% else %}Order{% endif %} Detail</h1>
+          </div>
+          <div class="col-lg-6 text-lg-right">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb justify-content-lg-end mb-0 px-0">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="mt-4">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6 col-lg-5 ml-3 ml-md-0 small text-secondary">
+                <p class="text-uppercase mb-2 text-dark"><strong>Billing Address</strong></p>
+                <p class="text-uppercase mb-1">{{user_address.first_name}} {{user_address.last_name}}</p>
+                <p class="mb-4">{{user_address.address_line1}}
+                  {% if user_address.address_line2 %}
+                  <br>
+                    {{user_address.address_line2}}
+                  {% endif %}
+                  <br>
+                  {{user_address.city}}, {{user_address.state}}, {{user_address.zipcode}}
+                  {{user_address.country}}
+                  <br>
+                  Email    - {{user_address.email}}
+                  Phone no - {{user_address.phone_no}}
+                </p>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                 <ul class="list-unstyled small d-inline-block">
+                  <li class="px-3 py-2 mb-1 bg-white"><strong class="text-uppercase">{% if request.user.is_farmer %}Supply{% else %}Order{% endif %} Id:</strong><span class="ml-2 text-muted">#1084{{ order.id }}</span></li>
+                  <li class="px-3 py-2 mb-1 bg-white text-muted">
+                    <strong class="text-uppercase text-dark">
+                    {% if request.user.is_farmer %}
+                      Supplied On:</strong>
+                      <a class="reset-anchor ml-2">{{order.supplied_on}}</a>
+                    {% else %}
+                      Ordered On:</strong>
+                      <a class="reset-anchor ml-2">{{order.ordered_on}}</a>
+                    {% endif %} 
+                  </li>
+                  <li class="px-3 py-2 mb-1 bg-white text-muted">
+                    <strong class="text-uppercase text-dark">
+                    Status:</strong>
+                    <span class="bg-{{order.get_status_class}} text-white badge shadow-sm mb-2 p-1">
+                        {{ order.status }}                
+                      </span>
+                  </li>
+                  <li class="px-3 py-2 mb-1 bg-white ">
+                  <strong class="text-uppercase text-dark">
+                  Total:</strong><a class="reset-anchor ml-2 ">
+                  ₹{{order.get_cart_total}} ({{order.get_cart_items}} Item{{order.get_cart_items|pluralize}})
+                  </a></li>
+                </ul>
+                </p>
+            </div>
+        </div>
+    </section> 
+
+    <section class="">
+        <div class="row">
+          <div class="col-lg-9 mb-4 mb-lg-0 mx-auto">
+            <!-- CART TABLE-->
+             <div class="table-responsive mb-4">
+                <table class="table">
+                  <thead class="bg-light">
+                    <tr>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Product</strong></th>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Price</strong></th>
+                      <th class="border-0 text-center" scope="col"> <strong class="text-small text-uppercase">Quantity</strong></th>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Total</strong></th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for item in items  %}
+                  <tr>
+                      <th class="pl-0 border-0" scope="row">
+                        <div class="media align-items-center"><a class="reset-anchor d-block animsition-link" href="detail.html"><img src="{{ item.product.imageURL }}" alt="..." width="70"/></a>
+                          <div class="media-body ml-3"><strong class="h6"><a class="reset-anchor animsition-link" href="detail.html">{{ item.product.name }}</a></strong></div>
+                        </div>
+                      </th>
+                      <td class="align-middle border-0">
+                        <p class="mb-0 small">₹
+                          {% if request.user.is_farmer %}
+                             {{ item.product.buy_price }}
+                          {% else %}
+                            {% if item.product.sale_price %}
+                              {{ item.product.sale_price }}
+                            {% else %}
+                              {{ item.product.sell_price }}
+                            {% endif %}
+                          {% endif %}
+                       </p>
+                      </td>
+                      <td class="align-middle text-center border-0">
+                        <p class="mb-0 small ">{{ item.quantity }}</p>
+                      </td>
+                      <td class="align-middle border-0">
+                        <p class="mb-0 small">₹{{ item.cust_get_total }}{{ item.farm_get_total }}</p>
+                      </td>
+              
+                    </tr>
+                  {% endfor %}
+                    
+                  </tbody>
+                </table>
+              </div>
+          </div>
+        </div>
+      </section>
+     
+    
+</div>
+{% endblock %}

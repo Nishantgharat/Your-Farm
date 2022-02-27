@@ -1,0 +1,59 @@
+/* your styles go here */
+
+.feature_1_wrapper {
+  width: 80%;
+  max-width: 800px;
+}
+.farmer-hero-img-wraper {
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+}
+.simg_wrapper {
+  margin-right: 10px;
+  background-color: #eedccc;
+  padding: 8px 10px 10px 10px;
+  min-width: 46px;
+  height: 46px;
+  text-align: center;
+  border-radius: 100px;
+}
+
+.shop_img_wrapper {
+  height: 250px;
+}
+.shop_img {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+}
+
+.custm_alert {
+  position: absolute;
+  margin: 0 auto;
+  z-index: 100;
+  width: 100%;
+}
+
+.fas.fa-heart {
+  color: #f11212;
+}
+.heart {
+  left: 1rem;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.strike{
+  text-decoration: line-through;
+  color: #a5aaaf !important;
+  font-size: 0.85rem !important;
+}
+.sticky-top{
+  top: 1rem;
+}
+.donate_day::before{
+  content: "•";
+  font-size: 1em;
+  margin-right: .3em;
+}

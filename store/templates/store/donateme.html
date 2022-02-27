@@ -1,0 +1,172 @@
+{% extends "store/layout.html" %} {% load static %}{% block body %}
+{% load humanize %}
+
+<section class="py-5">
+  <div class="container">
+    <h1 class="text-center">{{ donateme.title }}</h1>
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <!-- Donate me img -->
+        <div class="row ">
+          <div class="col">
+            <a
+              class="d-block"
+              href="{{ donateme.imageURL }}"
+              data-lightbox="product"
+              title="{{donateme.farmer}}"
+              ><img class="img-fluid" src="{{ donateme.imageURL  }}" alt="..."
+            /></a>
+          </div>
+        </div>
+          <!-- Donate me details -->
+        <div class="row mb-5">
+          <!-- Donate -->
+            <div class="px-4">
+              <ul class="nav nav-tabs border-0" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="description-tab"
+                    data-toggle="tab"
+                    href="#description"
+                    role="tab"
+                    aria-controls="description"
+                    aria-selected="true"
+                    >Description</a
+                  >
+                </li>
+              </ul>
+              <div class="tab-content mb-5" id="myTabContent">
+                <div
+                    class="tab-pane fade show active"
+                    id="description"
+                    role="tabpanel"
+                    aria-labelledby="description-tab"
+                  >
+                  <div class="p-4 border shadow">
+                  <ul class="list-unstyled small d-inline-block">
+                    {% if aboutme.is_verified %}
+                      <span class="p-2 mb-1 bg-success text-white badge shadow-sm mb-2">
+                          <strong class="text-uppercase"><i class="fas fa-check-circle mr-2"></i>Verrified</strong
+                          >
+                        </span>
+                    {% else %}
+                      <span class="p-2 mb-1 bg-danger text-white badge shadow-sm mb-2">
+                        <strong class="text-uppercase"><i class="fas fa-times-circle mr-2"></i>Not Verified</strong
+                        >
+                      </span>
+                    {% endif %}
+                      <li class="p-2 mb-1 bg-info text-white badge shadow-sm mb-2">
+                        <strong class="text-uppercase">
+                        <i class="fas fa-piggy-bank mr-2"></i>Monthly Savings</strong>
+                        <span class="ml-2 "> ₹{{aboutme.monthly_savings|floatformat:"0"|intcomma}}</span>
+                      </li>
+                      <li class="p-2 mb-1 bg-danger text-white badge shadow-sm mb-2">
+                        <strong class="text-uppercase">
+                        <i class="fas fa-university mr-2 "></i>Debt</strong>
+                        <span class="ml-2 "> ₹{{aboutme.debt|floatformat:"0"|intcomma}}</span>
+                      </li>
+                    </ul>
+                    <div class=" mb-0">
+                    <span class="p-2 mb-1 bg-white text-dark badge shadow-sm border mb-2 text-uppercase">
+                      <strong class="text-uppercase">
+                      <i class="fas fa-thumbtack mr-2"></i>
+                      Location
+                      </strong>
+                      <span class="ml-2 ">Vasai, Maharashtra </span>
+                    </span><br>
+                      {{ donateme.descp|linebreaks}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+     
+      <!-- Donateme card-->
+      <div class="col-lg-4 p-0 m-0 mt-5">
+        
+        <div class="card shadow w-100 p-2 py-3 sticky-top">
+            <div class="p-3">
+                <h4 class="mb-2">Support {{donateme.farmer}}</h4>
+                
+                <h5>₹ {% if donateme.fund_raised %} {{donateme.fund_raised}} {% else %}0{% endif %} raised <span class="text-muted text-small">of ₹{{donateme.fund_req|floatformat:"0"|intcomma}}</span></h5>
+                <div class="progress mb-2">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{ donateme.fund_percent|default_if_none:"0" }}%" aria-valuenow="{{ donateme.fund_percent|default_if_none:"0" }}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="list-unstyled small d-flex mt-3">
+                  <span class="px-3 py-2 mb-1 bg-white shadow-sm border">
+                    <strong class="text-uppercase">Donors</strong
+                    ><span class="ml-2 text-muted">{{donateme.donors}}</span>
+                  </span>
+                  <span class="px-3 py-2 mb-1 bg-white shadow-sm border ml-2">
+                    <strong class="text-uppercase">Created</strong
+                    ><span class="ml-2 text-muted">{{donateme.donate_time}}</span>
+                  </span>
+                </div>
+
+            </div>
+            <form
+                method="POST"
+              >
+                {% csrf_token %}
+                
+                <div class="col-sm-12 form-group">
+                {% if request.user == donateme.farmer  %}
+                <button class="btn btn-danger mt-2 btn-block " type="submit">End Campaign</button>
+                {% else %}
+                <div class="input-group mb-2 ">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">₹</span>
+                      </div>
+                      <input 
+                      class="form-control" 
+                      type="number" 
+                      name="bid" 
+                      min="5" 
+                      value="5" 
+                      required
+                      >
+                  </div>
+                  <button class="btn btn-success mt-2 btn-block " type="submit">Donate Now</button>
+                {% endif %}
+                  
+                  <button class="btn btn-dark mt-2 btn-block" >Share</button>
+            
+                </div>
+              </form>
+              {% if recent_donations %}
+              <h6 class="text-uppercase small m-3 mb-0">recent donations</h6>
+              <hr class = "m-0">
+                <div class="media m-3">
+                <img class="rounded-circle image-fluid" src="{% static 'img/user.png' %}" alt="" width="40">
+                    <div class="media-body ml-3">
+                      <p class="mb-0 text-uppercase">Jason Doe
+                      </p>
+                      <h6 class="text-small mb-0">$40
+                      <span 
+                        class="
+                        font-weight-normal 
+                        text-small 
+                        text-muted mb-0 mx-1 
+                        donate_day">
+                        2 days ago
+                      </span>
+                      </h6>
+                    </div>
+                  </div>
+              <hr class = "m-0">
+              {% endif %}
+              
+        
+        </div>
+
+        
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

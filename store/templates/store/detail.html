@@ -1,0 +1,388 @@
+{% extends "store/layout.html" %} {% load static %}{% block body %}
+<section class="py-5">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <!-- PRODUCT SLIDER-->
+        <div class="row m-sm-0">
+          <div class="col-sm-10 order-1 order-sm-2">
+            <a
+              class="d-block"
+              href="{{ product.imageURL }}"
+              data-lightbox="product"
+              title="Product item 1"
+              ><img class="img-fluid" src="{{ product.imageURL }}" alt="..."
+            /></a>
+          </div>
+        </div>
+      </div>
+      <!-- PRODUCT DETAILS-->
+      <div class="col-lg-6">
+        <h1>{{ product.name }}</h1>
+        <p class="text-muted lead">
+          {% if not request.user.is_farmer and product.sale_price %}
+            <span class="text-small text-danger">₹</span>
+            <span class="text-danger font-weight-bold">{{ product.sale_price }}</span>
+          {% endif %}
+          <span 
+          class="
+          {% if not request.user.is_farmer and product.sale_price %}
+                strike 
+          {% endif %} ">
+            <span class="text-small">₹</span>
+            {% if request.user.is_farmer %}
+            {{ product.buy_price }}
+            {% else %}
+            {{ product.sell_price }}
+            {% endif %}
+          </span>
+          {% if not request.user.is_farmer and product.sale_price %}
+            <span class="text-small text-black-50 ml-1 ">
+              Save ₹{{product.discount|floatformat:"0"}}
+            </span>
+          {% endif %}
+        </p>
+        <ul class="list-unstyled small d-inline-block">
+         
+         {% if product.in_stock %}
+          <li class="px-3 py-2 mb-1 bg-success text-white badge shadow-sm mb-2">
+            <strong class="text-uppercase">In Stock</strong
+            >
+          </li>
+          {% else %}
+          <li class="px-3 py-2 mb-1 bg-danger text-white badge shadow-sm mb-2">
+            <strong class="text-uppercase">Out of Stock</strong
+            >
+          </li>
+          {% endif %}
+          <li class="px-3 py-2 mb-1 bg-white text-muted shadow-sm">
+            <strong class="text-uppercase text-dark">Category:</strong
+            ><a class="reset-anchor ml-2 " href="#"
+              >{{product.category}} </a
+            >
+          </li>
+          {% if farmers %}
+           <li class="px-3 py-2 mb-1 bg-white text-muted shadow-sm">
+            <strong class="text-uppercase text-dark">Sold By:</strong
+            >
+            {% for farmer in farmers  %}
+            {% if not forloop.first %},{% endif %}
+            <a class="reset-anchor ml-2 " 
+             {% if farmer.has_aboutme %}
+              href={% url 'aboutme' farmer.has_aboutme.id %}
+             {% endif %}
+              > {{farmer}}
+              </a
+            >
+            {% endfor %}
+            
+          </li>
+          {% endif %}
+         
+          
+        </ul>
+        <p class="text-small mb-4">
+          {{ product.description|truncatechars:283 }}
+        </p>
+        <div class="row align-items-stretch mb-4">
+          <div class="col-sm-5 pr-sm-0">
+            <div
+              class="border d-flex align-items-center justify-content-between py-1 px-3 bg-white border-white"
+            >
+              <span class="small text-uppercase text-gray mr-4 no-select"
+                >Quantity</span
+              >
+              <div class="quantity">
+                <button class="dec-btn p-0">
+                  <i class="fas fa-caret-left"></i>
+                </button>
+                <input
+                  class="form-control border-0 shadow-0 p-0"
+                  type="text"
+                  value="1"
+                />
+                <button class="inc-btn p-0">
+                  <i class="fas fa-caret-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3 pl-sm-0">
+            <button
+              data-product="{{product.id}}"
+              data-action="add"
+              class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0 update-cart"
+             {% if not request.user.is_farmer and not product.in_stock %}disabled{% endif %}
+            >
+              Add to cart
+            </button>
+          </div>
+        </div>
+
+        {% if product.id in wishlist %}
+        <button
+          class="btn btn-link text-dark p-0 mb-4 update-wishlist"
+          data-product="{{product.id}}"
+          data-action="remove"
+        >
+          <i class="fas fa-heart"> </i> Remove from wish list
+        </button>
+        {% else %}
+        <button
+          class="btn btn-link text-dark p-0 mb-4 update-wishlist"
+          data-product="{{product.id}}"
+          data-action="add"
+        >
+          <i class="far fa-heart"> </i> Add to wish list
+        </button>
+        {% endif %}
+        <br />
+      </div>
+    </div>
+    <!-- DETAILS TABS-->
+    <ul class="nav nav-tabs border-0" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          id="description-tab"
+          data-toggle="tab"
+          href="#description"
+          role="tab"
+          aria-controls="description"
+          aria-selected="true"
+          >Description</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="reviews-tab"
+          data-toggle="tab"
+          href="#reviews"
+          role="tab"
+          aria-controls="reviews"
+          aria-selected="false"
+          >Reviews</a
+        >
+      </li>
+      {%if request.user.user_type != 'farmer'%} {% comment %}{% endcomment %}
+      {%if request.user not in comment_list%}
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="give-review-tab"
+          data-toggle="tab"
+          href="#give-review"
+          role="tab"
+          aria-controls="give review"
+          aria-selected="false"
+          >Give a review</a
+        >
+      </li>
+      {% endif %} {% endif %}
+    </ul>
+    <div class="tab-content mb-5" id="myTabContent">
+      <div
+        class="tab-pane fade show active"
+        id="description"
+        role="tabpanel"
+        aria-labelledby="description-tab"
+      >
+        <div class="p-4 p-lg-5 border shadow">
+          <h6 class="text-uppercase">Product description</h6>
+          <div class="text-muted text-small mb-0">
+          {{ product.description|linebreaks }}
+          {{ product.description|linebreaks }}
+          </div>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="reviews"
+        role="tabpanel"
+        aria-labelledby="reviews-tab"
+      >
+        <div class="p-4 p-lg-5 border shadow">
+          <div class="row">
+            <div class="col-lg-8">
+              {% with comments.count as total %} {% if total == 0 %}
+              <div>
+                <h6 class="text-capitalize mb-2">
+                  <i class="far fa-comments mr-1"></i> No Comments yet
+                </h6>
+                <p class="ml-4">Be the first give a review</p>
+              </div>
+
+              {% else %}
+              <h6 class="text-uppercase ml-3 mb-3">
+                {{total}} Comment{{total|pluralize}} {% endif %}
+              </h6>
+              {% endwith %} {% for comment in comments %}
+              <div class="media mb-3">
+                <div class="media-body ml-3 shadow-sm p-3 border">
+                  <h6 class="mb-0 text-uppercase">
+                    {{comment.customer.first_name}}
+                    {{comment.customer.last_name}}
+                  </h6>
+
+                  <p class="small text-muted mb-1 text-uppercase">
+                    {{comment.created_on}}
+                  </p>
+
+                  <p class="text-small mb-0">
+                    <strong>{{comment.title}}</strong>
+                  </p>
+                  <p class="text-small mb-0 text-muted">
+                    {{comment.description}}
+                  </p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="give-review"
+        role="tabpanel"
+        aria-labelledby="give-reviews-tab"
+      >
+        <div class="p-4 p-lg-5 border shadow">
+          <form
+            action="{% url 'product_comment' product.id %}"
+            method="POST"
+            class="commentForm"
+          >
+            {% csrf_token %}
+            <div class="col-sm-12 form-group">
+              <label class="text-small text-uppercase" for="title"
+                ><strong>Title</strong></label
+              >
+              <input
+                class="form-control form-control-lg"
+                name="title"
+                type="text"
+                placeholder="Enter Review Title"
+                required
+              />
+              {% comment %} {% render_field adrs_form.first_name
+              class+="form-control form-control-lg" placeholder="Enter your
+              first name"%} {% endcomment %}
+            </div>
+            <div class="col-sm-12 form-group">
+              <label class="text-small text-uppercase" for="description"
+                ><strong>Description</strong></label
+              >
+              <textarea
+                class="form-control form-control-lg"
+                name="description"
+                type="text"
+                placeholder="Enter Review Description"
+                required
+              ></textarea>
+              <button class="btn btn-dark mt-4" type="submit">Comment</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- RELATED PRODUCTS-->
+    <h2 class="h5 text-uppercase mb-4">Related products</h2>
+    <div class="row">
+      {% for product in similar_products %}
+      <!-- PRODUCT-->
+      <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="product text-center card shadow mb-3">
+          <div class="position-relative">
+            <div class="badge text-white badge-success">In Stock</div>
+            {% if product.id in wishlist %}
+            <div class="badge text-white heart">
+              <i class="fas fa-heart"> </i>
+            </div>
+            {% endif %}
+            <a
+              class="d-block shop_img_wrapper"
+              href="{% url 'detail' product.id %}"
+              ><img class="shop_img" src="{{ product.imageURL }}" alt="..."
+            /></a>
+            <div class="product-overlay">
+              <ul class="mb-0 list-inline">
+                <li class="list-inline-item m-0 p-0">
+                  {% if product.id in wishlist %}
+                  <button
+                    class="btn btn-sm btn-outline-dark update-wishlist"
+                    data-product="{{product.id}}"
+                    data-action="remove"
+                  >
+                    <i class="fas fa-heart"> </i>
+                  </button>
+                  {% else %}
+                  <button
+                    class="btn btn-sm btn-outline-dark update-wishlist"
+                    data-product="{{product.id}}"
+                    data-action="add"
+                  >
+                    <i class="far fa-heart"> </i>
+                  </button>
+                  {% endif %}
+                </li>
+                <li class="list-inline-item m-0 p-0">
+                  <button
+                    data-product="{{product.id}}"
+                    data-action="add"
+                    class="btn btn-sm btn-dark update-cart"
+                  >
+                    Add to cart
+                  </button>
+                </li>
+                <li class="list-inline-item mr-0">
+                  <button
+                    class="btn btn-sm btn-outline-dark"
+                    data-product="{{product.id}}"
+                    id="modalEnabler"
+                    data-toggle="modal"
+                    data-target="#productView"
+                  >
+                    <i class="fas fa-expand"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <h6>
+            <a class="reset-anchor" href="{% url 'detail' product.id %}"
+              >{{ product.name }}</a
+            >
+          </h6>
+           <h5 class="text-success mb-4 text-lg">
+                  {% if not request.user.is_farmer and product.sale_price %}
+                    <span class="text-small text-danger">₹</span>
+                    <span class="text-danger">{{ product.sale_price }}</span>
+                  {% endif %}
+                  <span 
+                  class="
+                  {% if not request.user.is_farmer and product.sale_price %}
+                        strike 
+                  {% endif %} ">
+                    <span class="text-small">₹</span>
+                    {% if request.user.is_farmer %}
+                    {{ product.buy_price }}
+                    {% else %}
+                    {{ product.sell_price }}
+                    {% endif %}
+                  </span>
+                  {% if not request.user.is_farmer and product.sale_price %}
+                    <span class="text-small text-black-50 ml-1 ">
+                      Save ₹{{product.discount|floatformat:"0"}}
+                    </span>
+                  {% endif %}
+                </h5>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

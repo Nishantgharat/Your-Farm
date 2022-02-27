@@ -1,0 +1,47 @@
+{% extends "store/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container ">
+  <section class="py-5 bg-light my-5">
+    <h1 class="text-center text-success"><i class="fas fa-check-circle"></i></h1>
+    <h3 class=" text-uppercase text-center">
+      Order Placed Successfully Placed.
+    </h3>
+     <h5 class=" text-uppercase mb-4 text-center">
+      Thank you for shopping
+    </h5>
+    {% comment %} <div class="d-flex justify-content center">
+      <a class="btn btn-dark btn-sm" href="{% url 'shop' %}"
+        >Continue Shopping<i
+          class="fas fa-long-arrow-alt-left ml-2"
+        ></i
+      ></a>
+       <a class="btn btn-dark btn-sm mr-4" href="{% url 'shop' %}"
+        >View Order Details<i
+          class="fas fa-long-arrow-alt-right ml-2"
+        ></i
+      ></a>
+    </div> {% endcomment %}
+    <div class="bg-light px-4 py-4">
+          <div class="row justify-content-around text-center">
+            <div class="col-sm-3 ">
+              <a
+                class="btn btn-dark btn-sm"
+                href="{% url 'shop' %}"
+                ><i class="fas fa-long-arrow-alt-left mr-2"> </i>Continue
+                shopping</a
+              >
+            </div>
+            <div class="col-sm-3 text-md-right">
+              <a class="btn btn-dark btn-sm" href="{% url 'orderdetail' order.id %}"
+                >Check order details<i
+                  class="fas fa-long-arrow-alt-right ml-2"
+                ></i
+              ></a>
+            </div>
+          </div>
+        </div>
+  </section>
+</div>      
+
+{% endblock %}

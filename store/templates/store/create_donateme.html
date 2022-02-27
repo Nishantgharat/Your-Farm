@@ -1,0 +1,42 @@
+{% extends "store/layout.html" %}
+{% load static %}
+{% block body %}
+{% load widget_tweaks %}
+
+<div class="card mt-3 mb-5 p-4 shadow col-md-8 mx-auto">
+    <div class="card-title border-bottom  mb-3"><h2>Donate me</h2></div>
+    <form action="{% url 'create_donateme' %}" method="POST" enctype="multipart/form-data"> 
+    {% csrf_token %}
+        <div class="row">
+        {% csrf_token %}
+              <div class="col-lg-8 form-group">
+                <label class="text-small text-uppercase" for="firstName">Title*</label>
+                {% render_field form.title  class+="form-control form-control-lg" placeholder="Enter the title" required="true" %}
+              </div>
+              <div class="col-lg-4 form-group">
+                <label class="text-small text-uppercase" for="lastName">Funds Needed*</label>
+                {% render_field form.fund_req  class+="form-control form-control-lg" placeholder="How much funds are needed" required="true"%}
+              </div>
+             
+              <div class="col-lg-4 form-group">
+                <label class="text-small text-uppercase" >Upload Image</label>
+                {% render_field form.upload_choice  required="true"%}
+              </div>
+                <div class="col-sm-4 mt-md-4">
+                    {% render_field form.img_url  class+="form-control form-control-lg " placeholder="Enter url" %}
+                </div>
+                <div class="col-sm-4 ml-0 mt-md-4">
+                    {% render_field form.img  class+="form-control form-control-lg " placeholder="" %}
+                </div>
+              <div class="col-lg-12 form-group">
+                <label class="text-small text-uppercase" for="state">Description*</label>
+                {% render_field form.descp  class+="form-control form-control-lg" placeholder="Enter a description" required="true"%}
+              </div>
+              <div class="col-lg-12 form-group">
+                <button class="btn btn-dark">Create Donate me</button>
+              </div>
+            </div>
+    </form>
+</div>
+
+{% endblock %}

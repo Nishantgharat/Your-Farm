@@ -1,0 +1,227 @@
+{% extends "store/layout.html" %} {% load static %} {% block body %}
+<div class="container">
+  <!-- HERO SECTION-->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="row px-4 px-lg-5 py-lg-4 align-items-center">
+        <div class="col-lg-6">
+          <h1 class="h2 text-uppercase mb-0">Cart</h1>
+        </div>
+        <div class="col-lg-6 text-lg-right">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-lg-end mb-0 px-0">
+              <li class="breadcrumb-item">
+                <a href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">Cart</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="py-5">
+    {% if items %}
+    <h2 class="h5 text-uppercase mb-4">
+      {{ request.session.cartStrings.cart}} cart
+    </h2>
+    <div class="row">
+      <div class="col-lg-8 mb-4 mb-lg-0">
+        <!-- CART TABLE-->
+        <div class="table-responsive mb-4">
+          <table class="table">
+            <thead class="bg-light">
+              <tr>
+                <th class="border-0" scope="col">
+                  <strong class="text-small text-uppercase">Product</strong>
+                </th>
+                <th class="border-0" scope="col">
+                  <strong class="text-small text-uppercase">Price</strong>
+                </th>
+                <th class="border-0" scope="col">
+                  <strong class="text-small text-uppercase">Quantity</strong>
+                </th>
+                <th class="border-0" scope="col">
+                  <strong class="text-small text-uppercase">Total</strong>
+                </th>
+                <th class="border-0" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in items %}
+              <tr>
+                <th class="pl-0 border-0" scope="row">
+                  <div class="media align-items-center">
+                    <a
+                      class="reset-anchor d-block animsition-link"
+                      href=""
+                      ><img
+                        src="{{ item.product.imageURL }}"
+                        alt="..."
+                        width="70"
+                    /></a>
+                    <div class="media-body ml-3">
+                      <strong class="h6"
+                        ><a
+                          class="reset-anchor animsition-link"
+                          href=""
+                          >{{ item.product.name }}</a
+                        ></strong
+                      >
+                    </div>
+                  </div>
+                </th>
+                <td class="align-middle border-0">
+                  <p class="mb-0 small">
+                    {% if usertype == 'farmer' %} ₹{{ item.product.buy_price }}
+                    {% else %} 
+                      {% if item.product.sale_price %}
+                        ₹{{ item.product.sale_price }}
+                      {% else %}
+                        ₹{{ item.product.sell_price }}
+                      {% endif %} 
+                    {% endif %}
+                  </p>
+                </td>
+                <td class="align-middle border-0">
+                  <div
+                    class="border d-flex align-items-center justify-content-between px-3"
+                  >
+                    <span
+                      class="small text-uppercase text-gray headings-font-family"
+                      >Quantity</span
+                    >
+                    <div class="quantity">
+                      <button
+                        class="dec-btn p-0 update-cart"
+                        data-product="{{item.product.id}}"
+                        data-action="remove"
+                      >
+                        <i class="fas fa-caret-left"></i>
+                      </button>
+                      <input
+                        class="form-control form-control-sm border-0 shadow-0 p-0 bg-white"
+                        type="text"
+                        value="{{ item.quantity }}"
+                        readonly
+                      />
+                      <button
+                        class="inc-btn p-0 update-cart"
+                        data-product="{{item.product.id}}"
+                        data-action="add"
+                      >
+                        <i class="fas fa-caret-right"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td class="align-middle border-0">
+                  <p class="mb-0 small">
+                    {% if usertype == 'farmer' %} ₹{{ item.farm_get_total }}
+                    {%else%} ₹{{ item.cust_get_total }} {% endif %}
+                  </p>
+                </td>
+                <td class="align-middle border-0">
+                  <button
+                    class="p-0 btn update-cart"
+                    data-product="{{item.product.id}}"
+                    data-action="delete"
+                  >
+                    <i class="fas fa-trash-alt small text-muted"></i>
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- CART NAV-->
+        <div class="bg-light px-4 py-3">
+          <div class="row align-items-center text-center">
+            <div class="col-md-6 mb-3 mb-md-0 text-md-left">
+              <a
+                class="btn btn-link p-0 text-dark btn-sm"
+                href="{% url 'shop' %}"
+                ><i class="fas fa-long-arrow-alt-left mr-2"> </i>Continue
+                shopping</a
+              >
+            </div>
+            <div class="col-md-6 text-md-right">
+              <a class="btn btn-outline-dark btn-sm" href="{% url 'checkout' %}"
+                >Procceed to checkout<i
+                  class="fas fa-long-arrow-alt-right ml-2"
+                ></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ORDER TOTAL-->
+      <div class="col-lg-4">
+        <div class="card border-0 rounded-0 p-lg-4 bg-light">
+          <div class="card-body">
+            <h5 class="text-uppercase mb-4">Cart total</h5>
+            <ul class="list-unstyled mb-0">
+            {% if not request.user.is_farmer %}
+                <li class="d-flex align-items-center justify-content-between mb-1">
+                  <span class="text-uppercase small ">
+                    Items Total
+                  </span>
+                  <span class="text-muted text-uppercase small">₹{{order.get_items_total}}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-between mb-4">
+                  <span class="text-uppercase small ">
+                    Discount
+                  </span>
+                  <span class="text-muted text-uppercase small">-₹{{order.get_cart_discount}}</span>
+                </li>
+              {% endif %}
+              <li class="d-flex align-items-center justify-content-between mb-2">
+                <strong class="text-uppercase small font-weight-bold"
+                  >Subtotal</strong
+                ><span class="text-muted small">₹{{ order_total }}</span>
+              </li>
+              {% if not request.user.is_farmer %}
+                <li class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="text-uppercase small ">
+                    Shipping
+                  </span>
+                  <span class="text-muted text-uppercase small">Free</span>
+                </li>
+              {% endif %}
+              <li class="border-bottom my-2"></li>
+              <li
+                class="d-flex align-items-center justify-content-between mb-4"
+              >
+                <strong class="text-uppercase small font-weight-bold"
+                  >Total</strong
+                ><span>₹{{ order_total }}</span>
+              </li>
+              <li>
+                <!-- <form action="#">
+                        <div class="form-group mb-0">
+                          <input class="form-control" type="text" placeholder="Enter your coupon">
+                          <button class="btn btn-dark btn-sm btn-block" type="submit"> <i class="fas fa-gift mr-2"></i>Apply coupon</button>
+                        </div>
+                      </form> -->
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <h2 class="h5 text-uppercase mb-4 text-center">
+      your {{ request.session.cartStrings.cart}} cart is empty
+    </h2>
+    <div class="text-center">
+      <a class="btn btn-dark btn-sm" href="{% url 'shop' %}"
+        >Start {{ request.session.cartStrings.cart}}<i
+          class="fas fa-long-arrow-alt-right ml-2"
+        ></i
+      ></a>
+    </div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

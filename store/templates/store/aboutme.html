@@ -1,0 +1,92 @@
+{% extends "store/layout.html" %}
+{% load static %}
+{% block body %}
+{% load widget_tweaks %}
+{% load humanize %}
+
+<div class="card mt-3 mb-5 p-4 shadow col-md-6 mx-auto">
+    <div class="card-title border-bottom  mb-3"><h2>About me</h2></div>
+        <div class="row">
+          <div class="col-lg-11 mx-auto">
+            <a
+              class="d-block"
+              href="{{ aboutme.imageURL }}"
+              data-lightbox="product"
+              title="{{aboutme.farmer}}"
+              ><img class="img-fluid" src="{{ aboutme.imageURL  }}" alt="..."
+            /></a>
+          </div>
+          
+          <div class="col-lg-11 mx-auto">
+            <h1 class="">{{ aboutme.farmer }}</h1>
+          
+            <ul class="list-unstyled small d-inline-block">
+              {% if aboutme.is_verified %}
+                <span class="p-2 mb-1 bg-success text-white badge shadow-sm mb-2">
+                    <strong class="text-uppercase"><i class="fas fa-check-circle mr-2"></i>Verrified</strong
+                    >
+                  </span>
+              {% else %}
+                <span class="p-2 mb-1 bg-danger text-white badge shadow-sm mb-2">
+                  <strong class="text-uppercase"><i class="fas fa-times-circle mr-2"></i>Not Verified</strong
+                  >
+                </span>
+              {% endif %}
+                <li class="p-2 mb-1 bg-info text-white badge shadow-sm mb-2">
+                  <strong class="text-uppercase">
+                  <i class="fas fa-piggy-bank mr-2"></i>Monthly Savings</strong>
+                  <span class="ml-2 "> ₹{{aboutme.monthly_savings|floatformat:"0"|intcomma}}</span>
+                </li>
+                <li class="p-2 mb-1 bg-danger text-white badge shadow-sm mb-2">
+                  <strong class="text-uppercase">
+                  <i class="fas fa-university mr-2 "></i>Debt</strong>
+                  <span class="ml-2 "> ₹{{aboutme.debt|floatformat:"0"|intcomma}}</span>
+                </li>
+                {% if donateme %}
+                 <li class="p-2 bg-success text-white badge shadow-sm border mb-2 text-uppercase">
+                  <strong class="text-uppercase">
+                  <i class="fas fa-chart-line mr-2"></i>
+                  Active Donateme Campaign
+                  </strong>
+                </li>
+                {% endif %}
+               
+            </ul>
+            
+          </div>
+
+          <div class=" col-lg-11 mx-auto  mb-3">
+           <span class="p-2 mb-1 bg-white text-dark badge shadow-sm border mb-2 text-uppercase">
+                 <strong class="text-uppercase">
+                 <i class="fas fa-thumbtack mr-2"></i>
+                 Location
+                 </strong>
+                 <span class="ml-2 ">Vasai, Maharashtra </span>
+              </span><br>
+                <div class="text-small mb-3">
+                  {{ aboutme.descp}}
+                </div>
+              {% if donateme %}
+              <div class="">
+                <a 
+                class="btn 
+                btn-outline-success
+                rounded shadow-sm mb-2"
+                href="{% url 'donateme' donateme.id  %}"
+                >
+                      <i class="fas fa-donate mr-2"></i>
+                      Support Donateme Campaign
+                </a>
+              </div>
+              {% endif %}  
+              
+          </div>
+         
+        </div>
+       
+          
+        
+    </div>
+</div>
+
+{% endblock %}

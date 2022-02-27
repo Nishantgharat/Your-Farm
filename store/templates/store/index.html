@@ -1,0 +1,208 @@
+{% extends "store/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+    <section class="hero pb-3 bg-cover bg-center d-flex align-items-center bg-light mb-5" >
+        <div class="container py-5">
+          <div class="row px-4 px-lg-5">
+            <div class="col-lg-6 my-auto text-center text-lg-left order-sm-last order-lg-first">
+              <p class="text-muted small text-uppercase mb-2">New Inspiration 2020</p>
+              <h1 class="h2 text-uppercase mb-3">20% off on new season</h1><a class="btn btn-dark" href="{% url 'shop' %}">Browse collections</a>
+            </div>
+            <div class="col-lg-6 order-first order-lg-last">
+              <img class="img-fluid" src="http://hn.arrowpress.net/efarm/wp-content/uploads/2017/04/img-banner2.png" alt="">
+            </div>
+          </div>
+        </div>
+    </section>
+    
+      <!-- Features 1 -->
+      <section class="pt-5  my-5">
+        <div class="row align-items-center">
+          <div class="col-12 text-center">
+            <p class="small text-muted small text-uppercase mb-1">WHAT WE DO</p>
+            <h1 class="text-uppercase mb-4">MADE WITH <span class="text-success">NATURE</span></h1>
+          </div>
+          <div class="col-12 text-center feature_1_wrapper mx-auto">
+              <p class="mb-1">Welcome to the world of natural and organic. Here you can discover the bounty of nature. We have grown on the principles of health, ecology, and care. We aim to give our customers a healthy chemical-free meal for perfect nutrition.</p>
+          </div>
+        </div>
+           <div class="row pt-5 text-center">
+            <div class="col-sm-6 col-lg-3 mb-4 mb-md-5 ">
+              <div class="d-inline-block">
+                <div class="media align-items-end">
+                  <span class="simg_wrapper"><img class="img-fluid h-100 " src="{% static 'img/farmer.png' %}" alt="..."></span>
+                  <div class="media-body text-left ml-3">
+                    <h6 class="text-uppercase mb-1">Help Farmers</h6>
+                    <p class="text-small mb-0 text-muted">Support Your local Farmers</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6  col-lg-3 mb-4 mb-md-5 ">
+              <div class="d-inline-block">
+                <div class="media align-items-end">
+                  <span class="simg_wrapper"><img class="img-fluid h-100 " src="{% static 'img/farmer.png' %}" alt="..."></span>
+                  <div class="media-body text-left ml-3">
+                    <h6 class="text-uppercase mb-1">Help Farmers</h6>
+                    <p class="text-small mb-0 text-muted">Support Your local Farmers</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6  col-lg-3 mb-4 mb-md-5 ">
+              <div class="d-inline-block">
+                <div class="media align-items-end">
+                  <span class="simg_wrapper"><img class="img-fluid h-100 " src="{% static 'img/farmer.png' %}" alt="..."></span>
+                  <div class="media-body text-left ml-3">
+                    <h6 class="text-uppercase mb-1">Help Farmers</h6>
+                    <p class="text-small mb-0 text-muted">Support Your local Farmers</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-4 mb-md-5 ">
+              <div class="d-inline-block">
+                <div class="media align-items-end">
+                  <span class="simg_wrapper"><img class="img-fluid h-100 " src="{% static 'img/farmer.png' %}" alt="..."></span>
+                  <div class="media-body text-left ml-3">
+                    <h6 class="text-uppercase mb-1">Help Farmers</h6>
+                    <p class="text-small mb-0 text-muted">Support Your local Farmers</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+    
+      <!-- CATEGORIES SECTION-->
+      <section class="pt-5  mb-5 bg-light p-5">
+        <header class="text-center">
+          <p class="small text-muted small text-uppercase mb-1">Carefully created collections</p>
+          <h2 class="h5 text-uppercase mb-4">Browse our categories</h2>
+        </header>
+        <div class="row justify-content-between">
+    
+          <div class="col-md-5 mb-4 mb-md-0">
+            <a class="category-item mb-4" href="{% url 'shop' %}">
+            <img class="img-fluid" src="http://hn.arrowpress.net/efarm/wp-content/uploads/2017/04/img-banner2.png" alt=""><strong class="category-item-title">Vegetables</strong></a>
+          </div>
+          <div class="col-md-5 mb-4 mb-md-0">
+            <a class="category-item" href="{% url 'shop' %}">
+              <img class="img-fluid" src="http://hn.arrowpress.net/efarm/wp-content/uploads/2017/04/img-banner1.png" alt=""><strong class="category-item-title">Fruits</strong></a>
+          </div>
+      </section>
+      <!-- TRENDING PRODUCTS-->
+      <section class="py-5">
+        <header>
+          <p class="small text-muted small text-uppercase mb-1">Made the hard way</p>
+          <h2 class="h5 text-uppercase mb-4">Top trending products</h2>
+        </header>
+        <div class="row">
+       
+          {% for product in products %}
+          <!-- PRODUCT-->
+          <div class="col-xl-3 col-lg-4 col-sm-6">
+            <div class="product text-center card shadow mb-3">
+              <div class=" position-relative">
+                <div class="badge text-white badge-success">In Stock</div><a class="d-block shop_img_wrapper " href="{% url 'detail' product.id %}"><img class="shop_img" src="{{ product.imageURL }}" alt="..."></a>
+                <div class="product-overlay">
+                  <ul class="mb-0 list-inline">
+                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
+                    <li class="list-inline-item m-0 p-0"><button data-product={{product.id}} data-action="add" class="btn btn-sm btn-dark update-cart">Add to cart</button></li>
+                    <li class="list-inline-item mr-0"><button class="btn btn-sm btn-outline-dark" data-product={{product.id}} id="modalEnabler"  data-toggle="modal" data-target="#productView"><i class="fas fa-expand"></i></button></li>
+                  </ul>
+                </div>
+              </div>
+              <h6> <a class="reset-anchor" href="{% url 'detail' product.id %}">{{ product.name }}</a></h6>
+               <h5 class="text-success mb-4 text-lg">
+                  {% if not request.user.is_farmer and product.sale_price %}
+                    <span class="text-small text-danger">₹</span>
+                    <span class="text-danger">{{ product.sale_price }}</span>
+                  {% endif %}
+                  <span 
+                  class="
+                  {% if not request.user.is_farmer and product.sale_price %}
+                        strike 
+                  {% endif %} ">
+                    <span class="text-small">₹</span>
+                    {% if request.user.is_farmer %}
+                    {{ product.buy_price }}
+                    {% else %}
+                    {{ product.sell_price }}
+                    {% endif %}
+                  </span>
+                  {% if not request.user.is_farmer and product.sale_price %}
+                    <span class="text-small text-black-50 ml-1 ">
+                      Save ₹{{product.discount|floatformat:"0"}}
+                    </span>
+                  {% endif %}
+                </h5>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+       <!-- Farmer Hero-->
+       <section class="hero pb-3 bg-cover bg-center d-flex align-items-center border shadow-sm mb-5" >
+        <div class="container py-5">
+          <div class="row px-4 px-lg-5 justify-content-between">
+            <div class="col-lg-7 mb-3 text-center">
+              <div class=""><img class="farmer-hero-img-wraper" src="{% static 'img/farmer_hero.png'%}" alt=""></div>
+            </div>
+            <div class="col-lg-5 my-auto text-center text-lg-left">
+              <p class="text-muted small text-uppercase mb-2">Are you a farmer?</p>
+              <h1 class="h2 text-uppercase mb-3">Join us today and start selling</h1><a class="btn btn-dark" href="{% url 'register' usertype='farmer' %}">Register Now</a>
+            </div>
+          </div>
+        </div>
+    </section>
+       
+      <!-- SERVICES-->
+      <section class="py-5 bg-light">
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              <div class="d-inline-block">
+                <div class="media align-items-end">
+                  <svg class="svg-icon svg-icon-big svg-icon-light">
+                    <use xlink:href="#delivery-time-1"> </use>
+                  </svg>
+                  <div class="media-body text-left ml-3">
+                    <h6 class="text-uppercase mb-1">Free shipping</h6>
+                    <p class="text-small mb-0 text-muted">Free shipping worlwide</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              <div class="d-inline-block">
+                <div class="media align-items-end">
+                  <svg class="svg-icon svg-icon-big svg-icon-light">
+                    <use xlink:href="#helpline-24h-1"> </use>
+                  </svg>
+                  <div class="media-body text-left ml-3">
+                    <h6 class="text-uppercase mb-1">24 x 7 service</h6>
+                    <p class="text-small mb-0 text-muted">Free shipping worlwide</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="d-inline-block">
+                <div class="media align-items-end">
+                  <svg class="svg-icon svg-icon-big svg-icon-light">
+                    <use xlink:href="#label-tag-1"> </use>
+                  </svg>
+                  <div class="media-body text-left ml-3">
+                    <h6 class="text-uppercase mb-1">Festival offer</h6>
+                    <p class="text-small mb-0 text-muted">Free shipping worlwide</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</div>
+{% endblock %}
