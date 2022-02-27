@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'fx4-pn%*&mek58^y!khe7%mol--!3c%vsh=-o-_-q*w(5co!*)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['your-farm.herokuapp.com','127.0.0.1']
 
 AUTH_USER_MODEL = "store.User"
 
