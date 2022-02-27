@@ -11,6 +11,8 @@ requests==2.25.1
 sqlparse==0.4.1
 stripe==2.56.0
 urllib3==1.26.4
+gunicorn==20.0.4
+whitenoise==5.0.1
 
 
 
