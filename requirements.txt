@@ -14,19 +14,3 @@ urllib3==1.26.4
 
 
 
-
-
-absl-py==0.13.0
-alabaster==0.7.12
-altgraph==0.17.2
-
-
-pyflakes==2.2.0
-
-PyInquirer==1.0.3
-pyinstaller==4.5.1
-pyinstaller-hooks-contrib==2021.3
-
-pywebio==1.2.3
-PyYAML==5.3.1
-pyzmq==19.0.2
