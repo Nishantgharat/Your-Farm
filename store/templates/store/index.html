@@ -105,7 +105,14 @@
           <div class="col-xl-3 col-lg-4 col-sm-6">
             <div class="product text-center card shadow mb-3">
               <div class=" position-relative">
-                <div class="badge text-white badge-success">In Stock</div><a class="d-block shop_img_wrapper " href="{% url 'detail' product.id %}"><img class="shop_img" src="{{ product.imageURL }}" alt="..."></a>
+                <div class="badge text-white badge-success">In Stock</div><a class="d-block shop_img_wrapper " href="{% url 'detail' product.id %}">
+                
+                
+                {% if product.name == "Tomato" %}
+                <img class="shop_img" src="{% static 'img/farmer.png' %}" alt="..."></a>
+                {% endif %} 
+                
+                
                 <div class="product-overlay">
                   <ul class="mb-0 list-inline">
                     <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
