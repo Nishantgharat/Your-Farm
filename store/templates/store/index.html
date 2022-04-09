@@ -108,30 +108,32 @@
 
 
 
-          
+          {% for product in products %}
           <!-- PRODUCT-->
           <div class="col-xl-3 col-lg-4 col-sm-6">
             <div class="product text-center card shadow mb-3">
               <div class=" position-relative">
-                <div class="badge text-white badge-success">In Stock</div><a class="d-block shop_img_wrapper " >
+                <div class="badge text-white badge-success">In Stock</div><a class="d-block shop_img_wrapper " href="{% url 'detail' product.id %}">
                 
                 
-                
+                {% if product.name == "Tomato" %}
                 <img class="shop_img" src="{% static 'img/farmer_hero.png'%}" alt="..."></a>
-               
-                
+                {% endif %} 
+                {% if product.name == "Radish" %}
+                <img class="shop_img" src="{% static 'img/farmer.png' %}" alt="..."></a>
+                {% endif %} 
                 
                 <div class="product-overlay">
                   <ul class="mb-0 list-inline">
                     <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                    <li class="list-inline-item m-0 p-0"><button  data-action="add" class="btn btn-sm btn-dark update-cart">Add to cart</button></li>
-                    <li class="list-inline-item mr-0"><button class="btn btn-sm btn-outline-dark"  id="modalEnabler"  data-toggle="modal" data-target="#productView"><i class="fas fa-expand"></i></button></li>
+                    <li class="list-inline-item m-0 p-0"><button data-product={{product.id}} data-action="add" class="btn btn-sm btn-dark update-cart">Add to cart</button></li>
+                    <li class="list-inline-item mr-0"><button class="btn btn-sm btn-outline-dark" data-product={{product.id}} id="modalEnabler"  data-toggle="modal" data-target="#productView"><i class="fas fa-expand"></i></button></li>
                   </ul>
                 </div>
               </div>
-              <h6> <a class="reset-anchor" >NNg</a></h6>
+              <h6> <a class="reset-anchor" href="{% url 'detail' product.id %}">{{ product.name }}</a></h6>
                <h5 class="text-success mb-4 text-lg">
-                  {% if not request.user.is_farmer  %}
+                  {% if not request.user.is_farmer and product.sale_price %}
                     <span class="text-small text-danger">₹</span>
                     <span class="text-danger">{{ product.sale_price }}</span>
                   {% endif %}
@@ -142,28 +144,27 @@
                   {% endif %} ">
                     <span class="text-small">₹</span>
                     {% if request.user.is_farmer %}
-                    3566
+                    {{ product.buy_price }}
                     {% else %}
-                    8900
+                    {{ product.sell_price }}
                     {% endif %}
                   </span>
-                  {% if not request.user.is_farmer  %}
+                  {% if not request.user.is_farmer and product.sale_price %}
                     <span class="text-small text-black-50 ml-1 ">
-                      Save ₹909000
+                      Save ₹{{product.discount|floatformat:"0"}}
                     </span>
                   {% endif %}
                 </h5>
             </div>
           </div>
-         
+          {% endfor %}
 
 
 
 
 
 
-
-
+          
         </div>
       </section>
        <!-- Farmer Hero-->
