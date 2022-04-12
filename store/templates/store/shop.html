@@ -114,7 +114,9 @@
                   /> -->
                 
                 
-
+                  {% if product.name == "Beetroot" %}
+                  <img class="shop_img" src="{% static 'img/Beetroot'%}" alt="..."></a>
+                  {% endif %} 
                   {% if product.name == "Tomato" %}
                   <img class="shop_img" src="{% static 'img/tomato.png'%}" alt="..."></a>
                   {% endif %} 
