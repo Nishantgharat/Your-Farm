@@ -114,14 +114,7 @@
                   ></a
                 >
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'wishlist' %}">
-                  <i class="far fa-heart mr-1"></i
-                  ><small class="text-gray"
-                    >({{ request.session.wishlistCount }})</small
-                  ></a
-                >
-              </li>
+              
               <li class="nav-item">
                 <div class="dropdown">
                   <a
@@ -149,6 +142,9 @@
                     {% if user.is_farmer %}
                       <a class="dropdown-item" href="{% url 'supplyhistory' %}"
                         >Supply History</a
+                      >
+                      <a class="dropdown-item" href="{%url 'add_product' %}"
+                      >Add Product</a
                       >
                       {% if user.has_aboutme %}
                       <a class="dropdown-item" href="{% url 'aboutme' user.has_aboutme.id %}"
