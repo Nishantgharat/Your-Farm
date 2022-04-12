@@ -103,11 +103,72 @@
                   <a
                     class="d-block shop_img_wrapper"
                     href="{% url 'detail' product.id %}"
-                    ><img
+                    >
+                    
+                    
+<!--                     
+                    <img
                       class="shop_img"
                       src="{{ product.imageURL }}"
                       alt="..."
-                  /></a>
+                  /> -->
+                
+                
+
+                  {% if product.name == "Tomato" %}
+                  <img class="shop_img" src="{% static 'img/tomato.png'%}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Radish" %}
+                  <img class="shop_img" src="{% static 'img/radish.png' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Spinach" %}
+                  <img class="shop_img" src="{% static 'img/spinach_PNG58.png' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Cabbage" %}
+                  <img class="shop_img" src="{% static 'img/Cabbage' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Apple" %}
+                  <img class="shop_img" src="{% static 'img/Apple' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Papaya" %}
+                  <img class="shop_img" src="{% static 'img/papaya.png' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "watermellon" %}
+                  <img class="shop_img" src="{% static 'img/watermellon' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Potatoes" %}
+                  <img class="shop_img" src="{% static 'img/Potatoes' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Red Onions" %}
+                  <img class="shop_img" src="{% static 'img/red-onion.png' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Banana" %}
+                  <img class="shop_img" src="{% static 'img/banana.png' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Dried Dates" %}
+                  <img class="shop_img" src="{% static 'img/dates.jpg' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Fig" %}
+                  <img class="shop_img" src="{% static 'img/Fig' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "Grapes" %}
+                  <img class="shop_img" src="{% static 'img/Grapes' %}" alt="..."></a>
+                  {% endif %} 
+                  {% if product.name == "nnn" %}
+                  <img class="shop_img" src="{% static 'img/jackfruit.jpeg' %}" alt="..."></a>
+                  {% endif %}
+
+
+
+
+
+
+
+
+
+
+                
+                </a>
                   <div class="product-overlay">
                     <ul class="mb-0 list-inline">
                       <li class="list-inline-item m-0 p-0">
